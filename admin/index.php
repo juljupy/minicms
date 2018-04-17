@@ -11,6 +11,8 @@
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<script type="text/javascript" src="../css/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../plugins/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="../plugins/tinymce/js/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="../plugins/tinymce/js/tinymce/langs/es.js"></script>
 	<script type="text/javascript" src="../js/scripts.js"></script>
 </head>
 <body>

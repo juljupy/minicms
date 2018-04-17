@@ -19,8 +19,9 @@ toastr.options = {
 (function() {
   'use strict';
   window.addEventListener('load', function() {
-    var forms = document.getElementsByClassName('needs-validation');
-    var validation = Array.prototype.filter.call(forms, function(form) {
+    /**Captura y validación de formularios**/
+    let forms = document.getElementsByClassName('needs-validation');
+    let validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
         if (form.checkValidity() === false) {
           event.preventDefault();
@@ -28,6 +29,16 @@ toastr.options = {
         }
         form.classList.add('was-validated');
       }, false);
+    });
+    tinymce.init({ 
+      selector:'textarea',
+      plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste imagetools wordcount"
+      ],
+      menubar: false,
+      height: 500
     });
   }, false);
 })();

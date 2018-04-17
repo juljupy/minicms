@@ -11,6 +11,8 @@ require_once('web/listar.php');
 		?>
 	</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-4.0.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="css/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<!--menu páginas-->
