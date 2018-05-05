@@ -22,9 +22,10 @@
 	* VISTAS (Formularios, listas, etc)
 	*/
 	define('INDEX', 'index.php');
-	define('INICIO', VISTA.'/inicio.php');
-	define('ENCABEZADO', VISTA.'/encabezado.php');
-	define('PIE', VISTA.'/pie.php');
+	define('LAYOUTVISTA',VISTA.'/layout');
+	define('INICIO', LAYOUTVISTA.'/inicio.php');
+	define('ENCABEZADO', LAYOUTVISTA.'/encabezado.php');
+	define('PIE', LAYOUTVISTA.'/pie.php');
 
 	/**
 	* Funcionalidad
@@ -36,6 +37,16 @@
 	* 
 	* Módulos
 	*/
+	// Raíz
+	define('BASE', '../../');
+	define('BASEINDEX', BASE.INDEX);
+	// Login(inicio de sesión)
+	define('AUTHVISTA', VISTA.'/auth');
+	define('AUTHCONTROL', CONTROL.'/auth');
+	define('LOGINFORM', AUTHVISTA.'/formlogin.php');
+	define('LOGINCONTROL', AUTHCONTROL.'/login.php');
+	define('LOGOUTCONTROL', AUTHCONTROL.'/logout.php');
+
 	// Páginas
 	define('PAGINAVISTA', VISTA.'/pagina');
 	define('PAGINACONTROL', CONTROL.'/pagina');
@@ -51,8 +62,11 @@
 
 	/**
 	*
-	* Menú
+	* Menú / Accesos
 	*/
+	define('LOGIN', 'login');
+	define('LOGOUT', 'logout');
+	define('INICIOADMIN', 'inicio');
 	define('PAGINA', 'pagina');
 
 	/**
@@ -61,6 +75,8 @@
 	*/
 	$modulo = [
 		'inicio' => INICIO,
+		'login' => LOGINFORM,
+		'logout' => LOGOUTCONTROL,
 		'pagina' => [
 			'accion' => [
 				'listar' => LISTAPAGINA,
@@ -77,7 +93,7 @@
 	* @parámetro $op que define el mensaje a mostrar en la notificación
 	* @parámetro $mod que asigna el módulo actual
 	*/
-	function notificar($op, $msg, $mod){
+	function notificar($op, $msg, $mod, $act = ''){
 		if (!isset($_SESSION)) session_start();
 		$tipo = '';
 		switch ($op) {
@@ -96,8 +112,23 @@
 		];
 		
 		$moduloactual = $mod;
-		echo "<script>window.location.href = '../../".INDEX."?mod=".$mod."&accion=listar';</script>";
+		$ruta = ($act != '') ? "&action=".$op : "";
+		header("Location: ".BASEINDEX."?mod=".$mod.$ruta);
 	}
-	
-	$moduloactual = isset($_GET['mod']) && $_GET['mod'] !== '' ? $modulo[$_GET['mod']]['accion'][$_GET['accion']] : INICIO;
+
+	$moduloactual = null;
+
+	if(isset($_SESSION['login']) && $_SESSION['login'] === true){
+		if(isset($_GET['mod']) && $_GET['mod'] !== ''){
+			if(isset($_GET['accion']) && $_GET['accion'] !== null){
+				$moduloactual = is_array($modulo[$_GET['mod']]) ? $modulo[$_GET['mod']]['accion'][$_GET['accion']] : $modulo[$_GET['mod']];
+			} else {
+				$moduloactual = $modulo[$_GET['mod']];
+			}
+		} else {
+			$moduloactual = INICIO;
+		}
+	} else {
+		$moduloactual = LOGINFORM;
+	}
  ?>

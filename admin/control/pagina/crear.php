@@ -16,7 +16,7 @@
 		$query = $conex->prepare($sql);
 		$query->execute(['titulo' => $titulo, 'contenido' => $contenido, 'autor' => $autor]);
 
-		notificar('exito', 'Registro guardado con éxito', PAGINA);
+		notificar('exito', 'Registro guardado con éxito', PAGINA, 'listar');
 	} catch (PDOException $e) {
 		echo $e->getMessage();
 	}
